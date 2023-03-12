@@ -1,12 +1,10 @@
 package com.example.crosswordgenerator.services;
 
 import com.example.crosswordgenerator.models.Crossword;
-import com.example.crosswordgenerator.repositories.CrosswordRepository;
+import com.example.crosswordgenerator.repositories.ICrosswordRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,14 +12,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CrosswordService {
 
-    private final CrosswordRepository crosswordRepository;
+    private final ICrosswordRepository crosswordRepository;
 
     public List<Crossword> getAll() {
         return crosswordRepository.findAll();
     }
 
     public void save(Crossword crossword) {
-        log.info("Saving new {}", crossword);
+        log.info("Saving new Crossword. Title: {}", crossword.getTitle());
         crosswordRepository.save(crossword);
     }
 

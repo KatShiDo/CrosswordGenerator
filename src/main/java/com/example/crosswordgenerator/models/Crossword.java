@@ -5,26 +5,31 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "crosswords")
 @Data
+@Table(name = "crosswords")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Crossword {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "title")
     private String title;
 
-    @Column(name = "words", columnDefinition = "text")
-    private String words;
+    @Lob
+    private byte[] content;
 
-    @Column(name = "user")
-    private String user;
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private User user;
+
+    private LocalDateTime creationDate;
+
+    @PrePersist
+    private void init() {
+        creationDate = LocalDateTime.now();
+    }
 }

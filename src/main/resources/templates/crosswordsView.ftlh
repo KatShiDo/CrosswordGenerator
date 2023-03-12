@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <title>CrosswordGenerator</title>
 </head>
@@ -10,6 +10,8 @@
     <div>
         <p><b>${crossword.title}</b> ${crossword.user} | <a href="/crossword/${crossword.id}">Решить</a></p>
     </div>
+    <#else>
+    <h3>Кроссвордов нет</h3>
 </#list>
 </body>
 </html>
