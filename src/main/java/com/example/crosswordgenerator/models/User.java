@@ -44,7 +44,7 @@ public class User implements UserDetails {
 
     private LocalDateTime creationDate;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private List<Crossword> crosswords = new ArrayList<>();
 
     @PrePersist

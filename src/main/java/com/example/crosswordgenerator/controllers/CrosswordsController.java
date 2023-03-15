@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
+
 @Controller
 @RequiredArgsConstructor
 public class CrosswordsController {
@@ -23,8 +25,8 @@ public class CrosswordsController {
     }
 
     @PostMapping("/crossword/create")
-    public String createCrossword(Crossword crossword) {
-        crosswordService.save(crossword);
+    public String createCrossword(Crossword crossword, Principal principal) {
+        crosswordService.save(principal, crossword);
         return "redirect:/";
     }
 
