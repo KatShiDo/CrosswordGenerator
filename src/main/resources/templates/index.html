@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Создать кроссворд</title>
+    <link type="text/css" rel="stylesheet" href="indexstyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <a href="#" id="header-link">СОЗДАТЬ КРОССВОРД</a>
+        <form action="" method="post" id="crossword-find-form">
+            <input type="text" name="search-crossword" id="search-crossword" placeholder="Найти кроссворд">
+            <button type="submit" id="search-submit-button"><img src="../static/search.png" alt=""></button>
+        </form>
+        <div class="account-buttons-holder">
+            <button type="button" class="account-button" id="sign-in">Войти</button>
+            <button type="button" class="account-button" id="sign-up">Регистрация</button>
+        </div>
+        <div class="sign-form signin-form">
+            <span class="sing-title">Войти</span>
+            <input type="text" name="signin-email" id="signin-email" class="account-info-field" required>
+            <label for="signin-email" class="account-label" id="signin-email-label">Email или имя пользователя</label>
+            <input type="password" name="signin-psw" id="signin-psw" class="account-info-field" autocomplete="current-password" required>
+            <label for="signin-psw" class="account-label" id="psw-label">Пароль</label>
+            <button type="button" class="sign-button highlighted-button" id="signin-button">Войти</button>
+            <button type="button" class="close-form" id="close-signin-form"><img src="../static/cross-23.svg" height="20px" width="20px" class="green-cross"></button>
+        </div>
+        <div class="sign-form signup-form">
+            <span class="sing-title">Регистрация</span>
+            <input type="text" name="signup-email" id="signup-email" class="account-info-field" required>
+            <label for="signup-email" class="account-label" id="signup-email-label">Email или имя пользователя</label>
+            <input type="password" name="signup-psw1" id="signup-psw1" class="account-info-field" required>
+            <label for="signup-psw1" class="account-label" id="psw-label1">Пароль</label>
+            <input type="password" name="signup-psw2" id="signup-psw2" class="account-info-field" required>
+            <label for="signup-psw2" class="account-label" id="psw-label2">Подтвердите пароль</label>
+            <button type="button" class="sign-button highlighted-button" id="signup-button">Регистрация</button>
+            <button type="button" class="close-form" id="close-signup-form"><img src="../static/cross-23.svg" height="20px" width="20px" class="green-cross"></button>
+        </div>
+    </header>
+    <main>
+        <article class="generator">
+            <article class="generator-field">
+                <form action="" method="post">
+                    <p>
+                        <textarea name="words" class="words-area" cols="30" rows="27" placeholder="Введите слова для кроссворда"></textarea>
+                    </p>
+                    <p>
+                        <button class="generate-button highlighted-button" type="submit">Создать</button>
+                    </p>
+                </form>
+            </article>
+            <article class="crossword-holder">
+                <!-- Put words here in grid-->
+            </article>
+            <article class="add-questions">
+                <span id="add-question-text">Добавить вопросы?</span>
+                <input type="radio" class="add-words-rb" id="yes" name="add-or-not">
+                <label for="yes" class="add-questions-label">Да</label>
+                <input type="radio" class="add-words-rb" id="no" name="add-or-not" checked>
+                <label for="no" class="add-questions-label">Нет</label>
+                <form action="" metohd="post" id="create-questions">
+                    <div class="question-entity" id="question1" qnumber="1">
+                        <span class="question-number">1</span>
+                        <textarea name="question1" class="question-field" cols="60" rows="4"
+                            placeholder="Введите вопрос"></textarea>
+                    </div>
+                    <div class="question-entity" id="question2" qnumber="2">
+                        <span class="question-number">2</span>
+                        <textarea name="question1" class="question-field" cols="60" rows="4"
+                            placeholder="Введите вопрос"></textarea>
+                    </div>
+                    <div class="question-entity" id="question3" qnumber="3">
+                        <span class="question-number">3</span>
+                        <textarea name="question1" class="question-field" cols="60" rows="4"
+                            placeholder="Введите вопрос"></textarea>
+                    </div>
+                    <div class="down-holder">
+                        <label for="crossword-name-text" id="name-label">Название кроссворда</label>
+                        <input type="text" name="crossword-name" id="crossword-name-text">
+                        <button type="button" class="questions-button highlighted-button">Сохранить</button>
+                        <button type="button" class="questions-button highlighted-button">Поделиться</button>
+                    </div>
+                </form>
+            </article>
+        </article>
+    </main>
+    <footer>
+        <span>Внешние ссылки:</span>
+        <a href="https://github.com/KatShiDo/CrosswordGenerator" id="github-link">Репозиторий Github</a>
+    </footer>
+    <script src="indexscript.js"></script>
+</body>
+</html>
