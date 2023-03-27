@@ -26,13 +26,14 @@ public class UserService {
     }
 
     public boolean create(User user) {
-        if (userRepository.findByNickname(user.getNickname()) != null) {
+        if (userRepository.findByUsername(user.getUsername()) != null || userRepository.findByEmail(user.getEmail()) != null) {
             return false;
         }
         user.setActive(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.getRoles().add(Role.ROLE_USER);
-        log.info("Saving new User. Nickname: {}", user.getNickname());
+        log.info("Saving new User. Username: {}", user.getUsername());
+        userRepository.save(user);
         return true;
     }
 
@@ -42,7 +43,7 @@ public class UserService {
             image = toImageEntity(file);
             user.setAvatar(image);
         }
-        log.info("Updating User. Name: {}", user.getNickname());
+        log.info("Updating User. Username: {}", user.getUsername());
         userRepository.save(user);
     }
 

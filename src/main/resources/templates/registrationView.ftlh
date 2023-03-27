@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CrosswordGenerator</title>
+</head>
+<body>
+<h1>CrosswordGenerator</h1>
+<h4>Регистрация</h4>
+<form action="/registration" method="post">
+    Email: <input type="email" name="email"><br><br>
+    Username: <input type="text" name="username"><br><br>
+    Password: <input type="password" name="password"><br><br>
+<#--    RetypePassword-->
+    <input type="hidden" name="_csrf" value="${_csrf.token}">
+    <input type="submit" value="Enter">
+</form>
+<#if errorMessage??>
+    <h2 style="color: red">
+        ${errorMessage}
+    </h2>
+</#if>
+<a href="/login">Войти</a>
+</body>
+</html>

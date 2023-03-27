@@ -4,6 +4,6 @@ import com.example.crosswordgenerator.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IUserRepository extends JpaRepository <User, Long> {
-    User findByNickname(String nickname);
+    User findByUsername(String username);
     User findByEmail(String email);
 }

@@ -1,13 +1,13 @@
 package com.example.crosswordgenerator.models;
 
 import com.example.crosswordgenerator.enums.Role;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -26,7 +26,7 @@ public class User implements UserDetails {
     private String email;
 
     @Column(unique = true)
-    private String nickname;
+    private String username;
 
     private boolean active;
 
@@ -59,7 +59,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return nickname;
+        return username;
     }
 
     @Override

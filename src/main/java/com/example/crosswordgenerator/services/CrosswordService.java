@@ -33,7 +33,7 @@ public class CrosswordService {
         if (principal == null) {
             return new User();
         }
-        return userRepository.findByNickname(principal.getName());
+        return userRepository.findByUsername(principal.getName());
     }
 
     public void delete(Long id) {
