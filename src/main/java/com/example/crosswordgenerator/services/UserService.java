@@ -13,6 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+
+/**
+ * Класс, предоставляющий операции для работы с кроссвордами
+ * */
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -21,10 +25,19 @@ public class UserService {
     private final IUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Получить всех пользователей.
+     * @return Список объектов класса User
+     * */
     public List<User> getAll() {
         return userRepository.findAll();
     }
 
+    /**
+     * Создать запись о пользователе.
+     * @param user объект класса User, представляющий пользователя
+     * @return Возвращает true, если пользователь был успешно создан, и false, если пользователь с таким именем или почтой уже есть в системе.
+     * */
     public boolean create(User user) {
         if (userRepository.findByUsername(user.getUsername()) != null || userRepository.findByEmail(user.getEmail()) != null) {
             return false;
@@ -37,6 +50,11 @@ public class UserService {
         return true;
     }
 
+    /**
+     * Обновить информацию о пользователе.
+     * @param user пользователь, информация о котором будет обновлена
+     * @param file объект, представляющий файл с изображением, загруженный на сервер
+     **/
     public void update(User user, MultipartFile file) throws IOException {
         Image image;
         if (file.getSize() != 0) {
@@ -47,14 +65,28 @@ public class UserService {
         userRepository.save(user);
     }
 
+    /**
+     * Удалить пользователя по его ID.
+     * @param id идентификатор пользователя, которого необходимо удалить.
+     * */
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
 
+    /**
+     * Найти пользователя по его id.
+     * @param id идентификатор пользователя.
+     * @return Объект, представляющий найденного пользователя, или null
+     * */
     public User getById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
+    /**
+     * Преобразовать загруженный на сервер файл к сущности Image, которая используется для хранения изображений в базе данных users.
+     * @param file загруженный на сервер файл.
+     * @return Объект класса Image, представляющий изображение
+     * */
     private Image toImageEntity(MultipartFile file) throws IOException {
         Image image = new Image();
         image.setName(file.getName());

@@ -11,6 +11,9 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * Объект, представляющий пользователся в системе
+ * */
 @Entity
 @Data
 @Table(name = "users")

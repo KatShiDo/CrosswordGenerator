@@ -12,12 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.ByteArrayInputStream;
 
+/**
+ * Контроллер, отвечающий за доступ к изображениям
+ * */
 @RestController
 @RequiredArgsConstructor
 public class ImageController {
 
     private final IImageRepository imageRepository;
 
+    /**
+     * Контроллер, возвращающий изображение по id.
+     * @param id id изображения в БД.
+     * @return Объект ResponseEntity, описывающий HTTP ответ.
+     * */
     @GetMapping("/images/{id}")
     private ResponseEntity<?> getImageById(@PathVariable Long id) {
         Image image = imageRepository.findById(id).orElse(null);

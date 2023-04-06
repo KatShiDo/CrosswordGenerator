@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Объект, в который будут отображаться строки из таблицы сrosswords
+ * */
 @Entity
 @Data
 @Table(name = "crosswords")

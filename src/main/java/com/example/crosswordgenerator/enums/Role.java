@@ -2,9 +2,19 @@ package com.example.crosswordgenerator.enums;
 
 import org.springframework.security.core.GrantedAuthority;
 
-public enum Role implements GrantedAuthority {
 
-    ROLE_USER, ROLE_ADMIN;
+/**
+ * Роль пользователя в системе.
+ * */
+public enum Role implements GrantedAuthority {
+    /**
+     * Роль пользователя.
+     * */
+    ROLE_USER,
+    /**
+     * Роль администратора.
+     * */
+    ROLE_ADMIN;
 
     @Override
     public String getAuthority() {

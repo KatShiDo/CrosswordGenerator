@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+/**
+ * Объект, хранящий аватар пользователя.
+ * */
 @Entity
 @Data
 @Table(name = "images")
