@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" th:xmlns="http://www.thymeleaf.org">
+<body>
+<header th:fragment="header">
+  <a href="#" id="header-link">СОЗДАТЬ КРОССВОРД</a>
+  <form action="" method="post" id="crossword-find-form">
+    <input type="text" name="search-crossword" id="search-crossword" placeholder="Найти кроссворд">
+    <button type="submit" id="search-submit-button"><img th:src="@{/img/search.png}" alt="Поиск"></button>
+  </form>
+  <div class="account-buttons-holder">
+    <button type="button" class="account-button" id="sign-in">Войти</button>
+    <button type="button" class="account-button" id="sign-up">Регистрация</button>
+  </div>
+</header>
+</body>
+</html>

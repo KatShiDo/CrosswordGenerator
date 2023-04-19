@@ -1,0 +1,63 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать кроссворд</title>
+    <link rel="stylesheet"  type="text/css" th:href="@{/css/generate.css}">
+    <link rel="stylesheet"  type="text/css" th:href="@{/css/header.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<main>
+    <header th:include="header :: header"></header>
+    <article class="generator">
+        <article class="generator-field">
+            <form th:action="@{/create}" method="get" th:object="${wordsobj}">
+                <p>
+                    <textarea th:field="*{words}" name="words" class="words-area" cols="30" rows="27" placeholder="Введите слова для кроссворда"></textarea>
+                </p>
+                <p>
+                    <button class="generate-button highlighted-button" type="submit">Создать</button>
+                </p>
+            </form>
+        </article>
+        <article class="crossword-holder">
+            <div class="crossword-grid"
+                 th:styleappend="'grid-template-rows repeat(' + ${height} + ', 5%); grid-template-columns repeat('+ ${width} + ', 5%);'">
+                <div th:if="${crossword} != null" th:each="cell : ${crossword}" th:text="${cell}" class="grid-cell">
+                    *
+                </div>
+                <div th:if="${crossword} == null" class="grid-cell" th:each="i : ${#numbers.sequence(0, 400)}">
+
+                </div>
+            </div>
+        </article>
+        <article th:if="${crossword}" class="add-questions">
+            <span id="add-question-text">Добавить вопросы?</span>
+            <input type="radio" class="add-words-rb" id="yes" name="add-or-not">
+            <label for="yes" class="add-questions-label">Да</label>
+            <input type="radio" class="add-words-rb" id="no" name="add-or-not" checked>
+            <label for="no" class="add-questions-label">Нет</label>
+            <form action="/crossword/save" method="post" id="create-questions">
+                <div class="question-entity" th:each="i : ${#numbers.sequence(0, wordsCount - 1)}"
+                     th:id="'question' + ${i}" th:attr="qnumber=${i}">
+                    <span class="question-number" th:text="${i} + 1">?</span>
+                    <textarea th:name="'question' + ${i}" class="question-field" cols="60" rows="4"
+                              placeholder="Введите вопрос"></textarea>
+                </div>
+                <div class="down-holder">
+                    <label for="crossword-name-text" id="name-label">Название кроссворда</label>
+                    <input type="text" name="crossword-name" id="crossword-name-text">
+                    <button type="button" class="questions-button highlighted-button">Сохранить</button>
+                    <button type="button" class="questions-button highlighted-button">Поделиться</button>
+                </div>
+            </form>
+        </article>
+    </article>
+    <footer th:include="footer :: footer"></footer>
+</main>
+<script th:src="@{/javascript/indexscript.js}"></script>
+</body>
+</html>

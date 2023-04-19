@@ -15,7 +15,7 @@
 |Spring Security| Фреймворк для реализации функции аутентификации и контроля доступа|
 |Project Lombok|Библиотека для автоматического написания шаблонного кода|
 |PostgreSQL|Библиотека для работы с БД PostgreSQL|
-|FreeMarker|Обработчик шаблонов|
+|Thymeleaf|Обработчик шаблонов|
 
 ### **Команда для запуска**
 Из консоли - ` java com.example.crosswordgenerator.CrosswordGeneratorApplication`

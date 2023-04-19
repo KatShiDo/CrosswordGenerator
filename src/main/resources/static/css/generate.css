@@ -3,7 +3,6 @@ body {
     margin: 0;
     padding: 0;
     background-color: #fefefe;
-    
     font-family: 'Nunito', sans-serif;
 }
 
@@ -14,7 +13,7 @@ body {
 }
 
 @media(max-width: 760px){
-    
+
 }
 
 .generator{
@@ -25,7 +24,7 @@ body {
 
 .generator-field {
     margin-left:0.5em;
-    margin-top:0.5em; 
+    margin-top:0.5em;
     width:15em;
 }
 
@@ -47,19 +46,25 @@ body {
     color:#81E979;
     transition: all 0.2s ease-in;
 }
-
 .crossword-holder{
     width:35em;
     height:35em;
     background-color: #363635;
-    display:grid;
-    grid-template-columns: repeat(20,5%);
-    grid-template-rows: repeat(20,5%);
+    overflow:scroll;
+    border:7px solid #363635;
     margin:0.5em auto;
-    padding:0.5em;
+}
+
+.crossword-grid{
+    display:grid;
+    width:100%;
+    height:100%;
+    grid-template-rows: repeat(20, 5%);
+    grid-template-columns: repeat(20, 5%);
 }
 
 .grid-cell{
+    text-align: center;
     background-color: #fefefe;
     border:0.1em solid #363635;
 }
@@ -352,7 +357,6 @@ footer{
     flex-direction: column;
 }
 
-
 #github-link{
     display:inline;
     color:#fefefe;
@@ -362,7 +366,6 @@ footer{
 }
 
 footer span{
-    
     color:#81E979;
     font-size:1.2em;
     margin-left:1em;
