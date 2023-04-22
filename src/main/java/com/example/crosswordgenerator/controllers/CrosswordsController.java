@@ -1,5 +1,8 @@
 package com.example.crosswordgenerator.controllers;
 
+import com.example.crosswordgenerator.cwbuilder.CrosswordBuilder;
+import com.example.crosswordgenerator.cwbuilder.CrosswordResult;
+import com.example.crosswordgenerator.cwbuilder.InputWords;
 import com.example.crosswordgenerator.models.Crossword;
 import com.example.crosswordgenerator.services.CrosswordService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Контроллер, отвечающий за взаимодействие пользователя с кроссвордами
@@ -27,9 +32,44 @@ public class CrosswordsController {
      * */
     @GetMapping("/")
     public String crosswords(Model model) {
+        List<Crossword> crosswords = crosswordService.getAll();
+        System.out.println(crosswords);
+        InputWords iw = new InputWords();
+        model.addAttribute("wordsobj", iw);
+        model.addAttribute("width", 20);
+        model.addAttribute("height", 20);
+        return "generateView";
+    }
 
-        model.addAttribute("crosswords", crosswordService.getAll());
-        return "crosswordsView";
+    @GetMapping("/create")
+    public String createCrosswordOutOfWords(InputWords iw, Model model){
+        CrosswordBuilder builder = new CrosswordBuilder();
+        List<String> words = new LinkedList<>();
+        for(String word:iw.getWords().split("[^a-zA-Zа-яА-Я0-9]"))
+            words.add(word);
+        CrosswordResult cw = builder.buildCrosswordOutOfWords(words);
+        if(cw.getStatus() == 0){
+            model.addAttribute("status", 0);
+            String[][] cwInArray = cw.getCrossword();
+            int height = cwInArray.length, width = cwInArray[0].length;
+            System.out.println("Generated crossword: ");
+            for(int i=0;i<width;i++) {
+                for (int k = 0; k < height; k++)
+                    System.out.print(cwInArray[k][i]);
+                System.out.print("\n");
+            }
+
+            List<String> cwInList = new LinkedList<>();
+            for(int i=0;i < width;i++)
+                for (int k = 0; k < height; k++)
+                    cwInList.add(cwInArray[k][i]);
+            model.addAttribute("crossword", cwInList);
+            model.addAttribute("wordsCount", words.size());
+            model.addAttribute("width", cwInArray.length);
+            model.addAttribute("height", cwInArray[0].length);
+        }else System.out.println("Status is not 0!");
+        model.addAttribute("wordsobj", iw);
+        return "generateView";
     }
 
     /**
