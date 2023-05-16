@@ -1,0 +1,43 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель администратора</title>
+    <link rel="stylesheet"  type="text/css" th:href="@{/css/generate.css}">
+    <link rel="stylesheet"  type="text/css" th:href="@{/css/header.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<main>
+    <header th:include="header :: header"></header>
+    <h4>Панель администратора</h4>
+    <table>
+        <tr th:if="${users.isEmpty()}">
+            <td colspan="2"> No users </td>
+        </tr>
+        <tr th:if="${!users.isEmpty()}" th:each="user : ${users}">
+            <td><span th:text="${user.email}"></span></td>
+            <td><span th:text="${user.username}"></span></td>
+            <td><span th:if="${user.active}" th:value="true"></span></td>
+            <td><span th:if="${!user.active}" th:value="false"></span></td>
+            <td>
+                <span th:each="role: ${user.roles}" th:text="${role}"></span>
+            </td>
+            <td>
+                <form th:action="/admin/user/ban/${user.id}" method="post">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    <input type="submit" value="Бан">
+                </form>
+            </td>
+            <td><a th:href="/admin/user/edit/${user.id}">Редактирование</a></td>
+            <td>
+                <a th:href="/user/${user.id}">Подробная информация</a>
+            </td>
+    </table>
+    <footer th:include="footer :: footer"></footer>
+</main>
+<script th:src="@{/javascript/indexscript.js}"></script>
+</body>
+</html>

@@ -44,7 +44,7 @@ public class UserService {
         }
         user.setActive(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.getRoles().add(Role.ROLE_USER);
+        user.getRoles().add(Role.ROLE_ADMIN);
         log.info("Saving new User. Username: {}", user.getUsername());
         userRepository.save(user);
         return true;
@@ -80,6 +80,21 @@ public class UserService {
      * */
     public User getById(Long id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    public void banUser(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            if (user.isActive()) {
+                user.setActive(false);
+                log.info("User banned with id {}; username: {}", id, user.getUsername());
+            }
+            else {
+                user.setActive(true);
+                log.info("User unbanned with id {}; username: {}", id, user.getUsername());
+            }
+        }
+        userRepository.save(user);
     }
 
     /**

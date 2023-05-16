@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- * Объект, в который будут отображаться строки из таблицы сrosswords
+ * Объект, в который будут отображаться строки из таблицы crosswords
  * */
 @Entity
 @Data

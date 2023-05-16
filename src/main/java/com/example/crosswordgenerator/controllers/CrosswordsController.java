@@ -95,8 +95,8 @@ public class CrosswordsController {
         return "redirect:/";
     }
 
-//    @GetMapping("/crossword/{id}")
-//    public String solveCrossword(@PathVariable Long id, Model model) {
-//
-//    }
+    @GetMapping("/crossword/{id}")
+    public String solveCrossword(@PathVariable Long id, Model model) {
+        return "crosswordSolutionView";
+    }
 }
