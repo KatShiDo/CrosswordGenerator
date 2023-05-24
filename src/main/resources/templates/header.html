@@ -3,10 +3,10 @@
 <body>
 <header th:fragment="header">
   <a th:href="@{/}" id="header-link">СОЗДАТЬ КРОССВОРД</a>
-  <form action="" method="post" id="crossword-find-form">
+  <!--<form action="" method="post" id="crossword-find-form">
     <input type="text" name="search-crossword" id="search-crossword" placeholder="Найти кроссворд">
     <button type="submit" id="search-submit-button"><img th:src="@{/img/search.png}" alt="Поиск"></button>
-  </form>
+  </form>-->
   <div th:if="!${user}" class="account-buttons-holder">
     <a th:href="@{/login}"><button type="button"  class="account-button" id="sign-in">Войти</button></a>
     <a th:href="@{/regin}"><button class="account-button" id="sign-up">Регистрация</button></a>
