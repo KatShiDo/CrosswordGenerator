@@ -1,0 +1,69 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #fefefe;
+    font-family: 'Nunito', sans-serif;
+}
+
+.form-holder{
+    background-color: #363635;
+    width:40%;
+    margin:200px auto;
+    padding:20px;
+}
+
+.form-title{
+    margin:10px auto;
+    width:fit-content;
+    color:#81E979;
+    font-weight:bold;
+}
+
+.form-label{
+    color:#fefefe;
+}
+
+.form-text-field{
+    outline:none;
+    height:25px;
+    align-self:stretch;
+    justify-self:stretch;
+    margin:5px;
+    border:none;
+}
+
+.submit-button{
+    border:3px #81E979 solid;
+    padding:5px 10px;
+    color:#fefefe;
+    background-color: #363635;
+    transition:all 0.2s ease-in;
+    margin:3px auto;
+}
+
+.submit-button:hover{
+    box-shadow: 0em 0em 0.15em 0.2em rgba(129, 233, 121, 0.3);
+}
+
+.form-error{
+    width:fit-content;
+    margin:5px auto;
+    color: red;
+    padding:5px 10px;
+}
+
+.form-addon{
+    width:fit-content;
+    margin:5px auto;
+    color: #fefefe;
+}
+
+.form-addon a{
+    text-decoration: none;
+    color: #81E979;
+}
+
+.form-addon a:hover{
+    text-decoration: underline;
+}

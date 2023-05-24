@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Решить кроссворд</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/solve.css}">
+    <link rel="stylesheet"  type="text/css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header th:include="header :: header"></header>
+    <main th:if="!${notFound}">
+        <article class="crossword-holder">
+            <div class="crossword-grid"
+                 th:styleappend="'grid-template-rows: repeat(' + ${height} + ', 1.75em); grid-template-columns: repeat('+ ${width} + ', 1.75em); width: ' + (1.75 * ${width}) + 'em; height: ' + (1.75 * ${height}) + 'em;'">
+                <div th:remove="tag" th:each="cell : ${crossword}">
+                <textarea cols="1" rows="1" maxlength="1" th:if="${cell.isWord}" class="solution-text"
+                          th:classappend="'word' + ${cell.word} + '-char' + ${cell.charPos} + ' ' + ((${cell.word2} != -1)? 'word' + ${cell.word2} + '-char' + ${cell.charPos2}:'')"></textarea>
+                    <div th:if="!${cell.isWord}" th:text="${cell.value}" class="grid-cell">
+                        *
+                    </div>
+                </div>
+            </div>
+        </article>
+        <article>
+            <div class="res-holder">
+                <button type="button" id="check-button" >Проверить</button>
+                <div class="results">Верно отгаданных слов: <span id="words-count">-</span></div>
+                <div class="results">Выполнено: <span id="accuracy">-</span></div>
+            </div>
+            <div class="questions">
+                <div th:each="question : ${questions}" class="question">
+                    <span class="question-number" th:text="${questionStat.count}">*</span>
+                    <span th:remove="tag" th:text="${question}"></span>
+                </div>
+            </div>
+        </article>
+    </main>
+    <main th:if="${notFound}">
+        <div class="not-found-message">
+            Такой кросворд не найден
+        </div>
+    </main>
+    <footer th:include="footer :: footer"></footer>
+<script th:src="@{/javascript/solve.js}">
+</script>
+</body>
+</html>

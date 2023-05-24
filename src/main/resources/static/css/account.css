@@ -1,0 +1,168 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #fefefe;
+    font-family: 'Nunito', sans-serif;
+}
+
+main{
+    height:100%;
+}
+
+.user-holder{
+    width:fit-content;
+    padding:20px;
+    margin:30px auto;
+    background-color: #dbdbdb;
+    display: flex;
+    align-items: center;
+}
+
+.avatar-holder{
+
+}
+
+.big-avatar-image{
+    width:150px;
+    height:150px;
+    margin:10px auto;
+    display:block;
+}
+
+.username-holder{
+    margin:5px auto;
+    width:fit-content;
+}
+
+.changeable-field{
+    outline: none;
+    resize:none;
+    color:#363635;
+    background-color: #dbdbdb;
+    text-align: center;
+    border:none;
+}
+
+#username{
+    font-weight: bold;
+    font-size:2em;
+}
+
+#email{
+    font-size:1.3em;
+}
+
+#file-input{
+    display:none;
+}
+
+.regular-button{
+    border:3px solid #363635;
+    display:block;
+    width:fit-content;
+    margin:5px auto;
+    padding:5px 10px;
+    transition: 0.1s all ease-in;
+    background-color: #dbdbdb;
+}
+
+.user-change-button{
+    width: 25px;
+    height:25px;
+    margin-bottom: 7px;
+    filter:opacity(0.4);
+    transition: all 0.1s ease-in;
+}
+
+.user-change-button:hover{
+    filter: opacity(1);
+}
+
+.regular-button:hover{
+    box-shadow: 0 0 0.15em 0.2em rgba(76, 76, 72, 0.3);
+}
+
+.email-text{
+    position: relative;
+    bottom:5px;
+    display:inline-block;
+}
+
+.email-holder{
+    align-self:stretch;
+    margin:5px 15px;
+}
+
+.password-text{
+    border:none;
+    user-select: none;
+    outline: none;
+}
+
+.password-change-holder{
+    margin:30px 15px;
+}
+
+.password-label{
+    margin-right:5px;
+}
+
+h3{
+    margin: 10px 20px;
+}
+
+.crosswords{
+    margin:0 40px;
+    padding:10px 0;
+    background-color: #363635;
+    color: #fefefe;
+}
+
+.crossword-entity{
+    border: 2px solid #81E979;
+    display:grid;
+    grid-template-columns: 7.5% 30% 12.5% 7.5% 5% 27.5% 10%;
+    margin:10px 30px;
+}
+
+.crossword-entity-head{
+    display:grid;
+    grid-template-columns: 7.5% 30% 12.5% 7.5% 5% 27.5% 10%;
+    margin:0 30px;
+}
+
+.head-field{
+    text-align: center;
+    font-size: 0.8em;
+}
+
+.entity-field{
+    border: 2px solid #81E979;
+    padding:5px;
+    text-align:end;
+}
+
+.delete-crossword{
+    text-decoration: none;
+    color:#fefefe;
+}
+
+.delete-crossword:hover{
+    text-decoration: underline;
+}
+
+.user-not-found{
+    margin: 10px 40px;
+    font-size:1.5em;
+}
+
+.crossword-link{
+    color: #fefefe;
+    text-decoration: none;
+}
+
+.crossword-link:hover{
+    text-decoration: underline;
+}
+

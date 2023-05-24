@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/regin.css}">
+    <title>Регистрация</title>
+</head>
+<body>
+<div class="form-holder">
+    <div class="form-title">
+        Регистрация аккаунта
+    </div>
+    <form th:action="@{/regin}" method="post" class="regin-form">
+        <label for="username" class="form-label">Имя пользователя</label>
+        <input type="text" name="username" id="username" class="form-text-field" required>
+        <label for="password" class="form-label">Пароль</label>
+        <input type="text" class="form-text-field" id="password" name="password" required>
+        <label for="email" class="form-label">Почта:</label>
+        <input type="text" name="email" id="email" class="form-text-field" required>
+        <button id="regin-button" type="submit" class="submit-button">Зарегистрироваться</button>
+    </form>
+    <div th:if="${usernameNotAvailable}" class="form-error">Пользователь с таким именем уже существует.</div>
+    <div th:if="${emailNotAvailable}" class="form-error">Пользователь с такой электронной почтой уже существует.</div>
+    <div th:if="${wrongPassword}" class="form-error">Пароль должен содержать заглавные и строчные буквы, цифры и специальные знаки, а также иметь длину более 6 символов.</div>
+    <div class="form-addon">Уже есть аккаунт? <a th:href="@{/login}">Войти</a></div>
+</div>
+</body>
+</html>

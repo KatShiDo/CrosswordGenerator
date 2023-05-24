@@ -1,0 +1,12 @@
+.regin-form{
+    display:grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1.5fr;
+    justify-items:start;
+    align-items: center;
+}
+
+#regin-button{
+    grid-row: 4 / 5;
+    grid-column: 1 / 3;
+}
