@@ -2,24 +2,31 @@ package com.example.crosswordgenerator.controllers;
 
 import com.example.crosswordgenerator.models.Image;
 import com.example.crosswordgenerator.repositories.IImageRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Контроллер, отвечающий за доступ к изображениям
  * */
 @RestController
-@RequiredArgsConstructor
+@Slf4j
 public class ImageController {
 
     private final IImageRepository imageRepository;
+
+    public ImageController(IImageRepository imageRepository) {
+        this.imageRepository = imageRepository;
+    }
 
     /**
      * Контроллер, возвращающий изображение по id.
@@ -27,13 +34,28 @@ public class ImageController {
      * @return Объект ResponseEntity, описывающий HTTP ответ.
      * */
     @GetMapping("/images/{id}")
-    private ResponseEntity<?> getImageById(@PathVariable Long id) {
+    public ResponseEntity<?> getImageById(@PathVariable Long id) {
         Image image = imageRepository.findById(id).orElse(null);
-        assert image != null;
         return ResponseEntity.ok()
                 .header("fileName", image.getOriginalFileName())
                 .contentType(MediaType.valueOf(image.getContentType()))
-                .contentLength(image.getSize())
                 .body(new InputStreamResource(new ByteArrayInputStream(image.getBytes())));
+    }
+
+    @PutMapping("/images")
+    public ResponseEntity<?> addImage(@RequestParam MultipartFile imageFile){
+        Image image = new Image();
+        try{
+            image.setBytes(imageFile.getBytes());
+            image.setOriginalFileName(imageFile.getOriginalFilename());
+            String mime = java.nio.file.Files.probeContentType((new File(image.getOriginalFileName())).toPath());
+            image.setContentType(mime);
+        }catch(IOException e){
+            log.error(e.getMessage());
+        }
+        imageRepository.save(image);
+        Map<String, Long> response = new HashMap<>();
+        response.put("id", image.getId());
+        return ResponseEntity.ok().body(response);
     }
 }

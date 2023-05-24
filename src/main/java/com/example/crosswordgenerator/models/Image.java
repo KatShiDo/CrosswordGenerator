@@ -1,10 +1,9 @@
 package com.example.crosswordgenerator.models;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 /**
  * Объект, хранящий аватар пользователя.
@@ -20,17 +19,11 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
-
-    private String originalFileName;
-
-    private Long size;
-
-    private String contentType;
+    private String originalFileName, contentType;
 
     @Lob
     private byte[] bytes;
 
-    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private User user;
 }

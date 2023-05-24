@@ -54,18 +54,18 @@ class PlacedWord{
         if(isHorizontal ^ otherHorizontal){
             int xCol, xLeft, xRight, yRow, yTop, yBottom;
             if(isHorizontal){
-                xLeft = posX - 1;
+                xLeft = posX - 2;
                 xRight = posX + length;
                 xCol = otherX;
                 yRow = posY;
-                yTop = otherY - 1;
+                yTop = otherY - 2;
                 yBottom = otherY + otherLength;
             }else{
-                xLeft = otherX - 1;
+                xLeft = otherX - 2;
                 xRight = otherX + otherLength;
                 xCol = posX;
                 yRow = otherY;
-                yTop = posY - 1;
+                yTop = posY - 2;
                 yBottom = posY + length;
             }
             return (xLeft <= xCol && xCol <= xRight) && (yTop <= yRow && yRow <= yBottom);

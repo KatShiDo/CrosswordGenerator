@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -23,7 +25,6 @@ import java.util.List;
 public class UserService {
 
     private final IUserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
     /**
      * Получить всех пользователей.
@@ -39,31 +40,36 @@ public class UserService {
      * @return Возвращает true, если пользователь был успешно создан, и false, если пользователь с таким именем или почтой уже есть в системе.
      * */
     public boolean create(User user) {
-        if (userRepository.findByUsername(user.getUsername()) != null || userRepository.findByEmail(user.getEmail()) != null) {
+        if (userRepository.findByUsername(user.getUsername()).isPresent() || userRepository.findByEmail(user.getEmail()).isPresent()) {
             return false;
         }
-        user.setActive(true);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.getRoles().add(Role.ROLE_ADMIN);
         log.info("Saving new User. Username: {}", user.getUsername());
         userRepository.save(user);
         return true;
     }
 
-    /**
-     * Обновить информацию о пользователе.
-     * @param user пользователь, информация о котором будет обновлена
-     * @param file объект, представляющий файл с изображением, загруженный на сервер
-     **/
-    public void update(User user, MultipartFile file) throws IOException {
-        Image image;
-        if (file.getSize() != 0) {
-            image = toImageEntity(file);
-            user.setAvatar(image);
-        }
-        log.info("Updating User. Username: {}", user.getUsername());
-        userRepository.save(user);
+    public boolean update(User user){
+        if(userRepository.findById(user.getId()).isPresent()){
+            userRepository.save(user);
+            return true;
+        }else return false;
     }
+
+    //Кажется этот метод не нужен. Чтобы обновить информацию о пользователе, достаточно изменить необходимые поля в объекте user
+//    /**
+//     * Обновить информацию о пользователе.
+//     * @param user пользователь, информация о котором будет обновлена
+//     * @param file объект, представляющий файл с изображением, загруженный на сервер
+//     **/
+//    public void update(User user, MultipartFile file) throws IOException {
+//        Image image;
+//        if (file.getSize() != 0) {
+//            image = toImageEntity(file);
+//            user.setAvatar(image);
+//        }
+//        log.info("Updating User. Username: {}", user.getUsername());
+//        userRepository.save(user);
+//    }
 
     /**
      * Удалить пользователя по его ID.
@@ -80,6 +86,19 @@ public class UserService {
      * */
     public User getById(Long id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    public User getByUsername(String username){
+        return userRepository.findByUsername(username).orElse(null);
+    }
+
+
+    public boolean isUsernameAvailable(String username){
+        return !userRepository.findByUsername(username).isPresent();
+    }
+
+    public boolean isEmailAvailable(String email){
+        return !userRepository.findByEmail(email).isPresent();
     }
 
     public void banUser(Long id) {
@@ -102,13 +121,14 @@ public class UserService {
      * @param file загруженный на сервер файл.
      * @return Объект класса Image, представляющий изображение
      * */
-    private Image toImageEntity(MultipartFile file) throws IOException {
-        Image image = new Image();
-        image.setName(file.getName());
-        image.setOriginalFileName(file.getOriginalFilename());
-        image.setContentType(file.getContentType());
-        image.setSize(file.getSize());
-        image.setBytes(file.getBytes());
-        return image;
-    }
+    //Похоже, что этот метод тоже не нужен (для изображений есть отдельный сервис)
+//    private Image toImageEntity(MultipartFile file) throws IOException {
+//        Image image = new Image();
+//        image.setName(file.getName());
+//        image.setOriginalFileName(file.getOriginalFilename());
+//        image.setContentType(file.getContentType());
+//        image.setSize(file.getSize());
+//        image.setBytes(file.getBytes());
+//        return image;
+//    }
 }

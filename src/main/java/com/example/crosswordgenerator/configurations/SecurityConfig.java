@@ -1,15 +1,17 @@
 package com.example.crosswordgenerator.configurations;
 
-import com.example.crosswordgenerator.services.CustomUserDetailsService;
-import lombok.RequiredArgsConstructor;
+import com.example.crosswordgenerator.models.User;
+import com.example.crosswordgenerator.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 
 /**
@@ -17,51 +19,48 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @see <a href="https://spring.io/guides/gs/securing-web/">Официальная документация по Spring</a>.
  * */
 @EnableWebSecurity
-@RequiredArgsConstructor
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@Configuration
+@Slf4j
+public class SecurityConfig {
+    private UserService userService;
 
-    private final CustomUserDetailsService userDetailsService;
+    public SecurityConfig(UserService userService) {
+        this.userService = userService;
+    }
 
-    /**
-     * Метод, позволяющий настраивать параметры авторизации для Spring Security.
-     * @param http объект, позволяющий настраивать параметры Spring Security для определённого http запроса.
-     * */
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/", "/create", "/crossword/**", "/images/**", "/registration", "/css/**", "/javascript/**", "/img/**", "/user/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
+    @Bean
+    public PasswordEncoder bCryptPasswordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(){
+        return (username)->{
+            User user = userService.getByUsername(username);
+            if(user != null) {
+                log.info("User with name {} found, password {} ", username, user.getPassword());
+                return user;
+            }
+            else {
+                log.info("User with name {} not found", username);
+                throw new UsernameNotFoundException("User with username " + username + " doesn't exists.");
+            }
+        };
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+        return http.authorizeHttpRequests()
+                .requestMatchers("/account", "/save").hasRole("USER")
+                .requestMatchers("/*", "/**").permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .permitAll()
+                .defaultSuccessUrl("/")
                 .and()
                 .logout()
-                .permitAll();
-
-    }
-
-    /**
-     * Метод, позволяющий настраивать параметры аутентификации для Spring Security.
-     * @param auth объект, предназначенный для настройки параметров AuthenticationManager
-     * */
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
-    }
-
-
-    /**
-     * Метод, определяющий способ кодирования пароля.
-     * @return Реализация PasswordEncoder, которая использует хеш-функцию BCrypt
-     * */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(8);
+                .logoutSuccessUrl("/")
+                .and()
+                .build();
     }
 }

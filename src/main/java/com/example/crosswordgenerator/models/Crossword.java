@@ -1,38 +1,43 @@
 package com.example.crosswordgenerator.models;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Объект, в который будут отображаться строки из таблицы crosswords
  * */
 @Entity
 @Data
-@Table(name = "crosswords")
+@Slf4j
 @AllArgsConstructor
 @NoArgsConstructor
 public class Crossword {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String title;
+    private int solved, width, height;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<WordEntity> words;
 
-    @Lob
-    private byte[] content;
+    @ElementCollection
+    private List<String> questions;
 
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     private LocalDateTime creationDate;
 
     @PrePersist
     private void init() {
+        solved = 0;
+        log.info("Crossword persisted");
         creationDate = LocalDateTime.now();
     }
 }

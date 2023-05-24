@@ -1,0 +1,79 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/account.css}">
+    <link rel="stylesheet"  type="text/css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}">
+    <title>Информация о пользователе</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+<header th:include="header :: header"></header>
+<main th:if="${user}">
+    <div class="user-holder">
+        <div class="avatar-holder">
+            <div class="username-holder">
+                <textarea class="changeable-field" id="username" th:cols="${user.username.length()}" rows="1" th:text="${user.username}"></textarea>
+                <img th:src="@{/img/pencil.png}" class="user-change-button" alt="change" id="change-username" th:attr="user_id=${user.id}">
+            </div>
+            <img th:if="${user.avatar}" th:src="@{'/images/' + ${user.avatar.id}}" class="big-avatar-image" alt="avatar">
+            <img th:if="!${user.avatar}" th:src="@{/img/avatar.png}" class="big-avatar-image" alt="avatar">
+            <input type="file" id="file-input" accept=".png, .jpg, .jpeg" th:attr="user_id=${user.id}">
+            <label for="file-input" class="regular-button">Изменить</label>
+        </div>
+        <div class="info-holder">
+            <div class="email-holder">
+                <div class="email-text">Эл. почта: </div>
+                <textarea th:cols="${user.email.length()}" rows="1" id="email" class="changeable-field" th:text="${user.email}">*</textarea>
+                <img th:src="@{/img/pencil.png}" th:attr="user_id=${user.id}" id="change-email" class="user-change-button" alt="change">
+            </div>
+            <div class="password-change-holder">
+                <!--
+                <label class="password-label">Старый пароль: </label>
+                <input type="password" class="password-text">
+                -->
+                <label class="password-label">Новый пароль: </label>
+                <input type="text" class="password-text">
+            </div>
+            <button type="button" id="change-password" th:attr="user_id=${user.id}" class="regular-button">Сменить пароль</button>
+        </div>
+    </div>
+    <div class="crosswords">
+        <h3>Все Кроссоврды: </h3>
+        <div class="crossword-entity-head">
+            <div class="head-field">Номер</div>
+            <div class="head-field">Имя кроссворда</div>
+            <div class="head-field">Дата создания</div>
+            <div class="head-field">Решено раз</div>
+            <div class="head-field">Слов</div>
+            <div class="head-field">Ссылка</div>
+            <div class="head-field">Управление</div>
+        </div>
+        <div th:each="crossword : ${crosswords}" class="crossword-entity">
+            <div class="entity-field" th:text="${crosswordStat.count}">*</div>
+            <div class="entity-field" th:text="${crossword.title}">*</div>
+            <div class="entity-field">
+                <span th:remove="tag" th:text="${crossword.creationDate.dayOfMonth}">*</span>.
+                <span th:remove="tag" th:text="${crossword.creationDate.monthValue}">*</span>.
+                <span th:remove="tag" th:text="${crossword.creationDate.year}">*</span>
+            </div>
+            <div class="entity-field" th:text="${crossword.solved}">*</div>
+            <div class="entity-field" th:text="${crossword.words.size()}">*</div>
+            <div class="entity-field"><a class="crossword-link" th:href="@{'/solve/' + ${crossword.id}}" th:text="'http://localhost:8080/solve/' + ${crossword.id}">*</a></div>
+            <div class="entity-field"><a th:attr="delete_id=${crossword.id}" class="delete-crossword">Удалить</a></div>
+        </div>
+    </div>
+</main>
+<main th:if="!${user}">
+    <div class="user-not-found">
+        Пользователь не найден
+    </div>
+</main>
+<footer th:include="footer :: footer"></footer>
+<script th:src="@{/javascript/account.js}"></script>
+</body>
+</html>

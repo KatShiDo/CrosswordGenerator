@@ -1,13 +1,16 @@
 package com.example.crosswordgenerator.models;
 
 import com.example.crosswordgenerator.enums.Role;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -20,9 +23,8 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(unique = true)
@@ -33,9 +35,14 @@ public class User implements UserDetails {
 
     private boolean active;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "image_id")
+    @OneToOne(fetch = FetchType.LAZY)
     private Image avatar;
+
+    @JsonProperty("avatar")
+    public void unpackNested(Map<String, Long> json){
+        avatar = new Image();
+        avatar.setId(json.get("id"));
+    }
 
     @Column(columnDefinition = "text")
     private String password;
@@ -47,7 +54,7 @@ public class User implements UserDetails {
 
     private LocalDateTime creationDate;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Crossword> crosswords = new ArrayList<>();
 
     @PrePersist

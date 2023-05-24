@@ -1,0 +1,29 @@
+footer{
+    height:5em;
+    width:100%;
+    background-color: #363635;
+    margin-top:2em;
+    display:flex;
+    align-items: start;
+    flex-direction: column;
+}
+
+#github-link{
+    display:inline;
+    color:#fefefe;
+    text-decoration: none;
+    font-size: 1.2em;
+    margin: 0em 1em;
+}
+
+footer span{
+    color:#81E979;
+    font-size:1.2em;
+    margin-left:1em;
+    margin-top:0.5em;
+}
+
+.link-holder{
+    margin: 5px;
+    color:#fefefe;
+}

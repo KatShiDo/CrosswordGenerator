@@ -1,18 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>CrosswordGenerator</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
+    <title>Войти</title>
 </head>
 <body>
-<h1>CrosswordGenerator</h1>
-<h4>Авторизация</h4>
-<form action="/login" method="post">
-    Nickname: <input type="text" name="username"><br><br>
-    Password: <input type="password" name="password"><br><br>
-    <input type="hidden" name="_csrf" value="${_csrf.token}">
-    <input type="submit" value="Enter">
-</form>
-<a href="/registration">Зарегистрироваться</a>
+    <div class="form-holder">
+        <div class="form-title">
+            Вход в аккаунт
+        </div>
+        <form th:action="@{/login}" method="post" class="login-form">
+            <label for="username" class="form-label">Имя пользователя</label>
+            <input type="text" name="username" id="username" class="form-text-field" required>
+            <label for="password" class="form-label">Пароль</label>
+            <input type="password" class="form-text-field" id="password" name="password" required>
+            <button id="login-button" type="submit" class="submit-button" value="Login">Войти</button>
+        </form>
+        <div th:if="${loginError}" class="form-error">Неверное имя пользователя или пароль.</div>
+        <div class="form-addon">Нет аккаунта? <a th:href="@{/regin}">Зарегистрироваться</a></div>
+    </div>
 </body>
 </html>

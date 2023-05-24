@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+  db:
+    image: postgres
+    ports:
+     - '8002:5432'
+    restart: always
+    environment:
+      POSTGRES_DB: 'cwgendb'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: '1234'
+    volumes:
+      - my-db:/var/lib/postgresql/data
+  app:
+    build: javaserver/
+    environment:
+     SPRING_DATASOURCE_URL: 'jdbc:postgresql://db:5432/cwgendb'
+     SPRING_DATASOURCE_USERNAME: 'postgres'
+     SPRING_DATASOURCE_PASSWORD: '1234'
+    ports:
+     - '8080:8080'
+    expose:
+     - '8080'
+    volumes:
+     - my-app:/home/
+    depends_on:
+     - db
+volumes:
+  my-db:
+  my-app:

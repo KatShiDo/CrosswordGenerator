@@ -65,25 +65,40 @@
                 <label for="no" class="add-questions-label">Нет</label>
                 <form action="" metohd="post" id="create-questions">
                     <div class="question-entity" id="question1" qnumber="1">
-                        <span class="question-number">1</span>
+                        <div class="entity-head">
+                            <span class="question-number">1</span>
+                            <span class="word-for-question">
+                                Медведь
+                            </span>
+                        </div>
                         <textarea name="question1" class="question-field" cols="60" rows="4"
-                            placeholder="Введите вопрос"></textarea>
+                                  placeholder="Введите вопрос"></textarea>
                     </div>
                     <div class="question-entity" id="question2" qnumber="2">
-                        <span class="question-number">2</span>
+                        <div class="entity-head">
+                            <span class="question-number">2</span>
+                            <span class="word-for-question">
+                                Водка
+                            </span>
+                        </div>
                         <textarea name="question1" class="question-field" cols="60" rows="4"
-                            placeholder="Введите вопрос"></textarea>
+                                  placeholder="Введите вопрос"></textarea>
                     </div>
                     <div class="question-entity" id="question3" qnumber="3">
-                        <span class="question-number">3</span>
+                        <div class="entity-head">
+                            <span class="question-number">3</span>
+                            <span class="word-for-question">
+                                Балалайка
+                            </span>
+                        </div>
                         <textarea name="question1" class="question-field" cols="60" rows="4"
-                            placeholder="Введите вопрос"></textarea>
+                                  placeholder="Введите вопрос"></textarea>
                     </div>
                     <div class="down-holder">
                         <label for="crossword-name-text" id="name-label">Название кроссворда</label>
                         <input type="text" name="crossword-name" id="crossword-name-text">
                         <button type="button" class="questions-button highlighted-button">Сохранить</button>
-                        <button type="button" class="questions-button highlighted-button">Поделиться</button>
+                        <div class="link-holder"> Ссылка на кроссворд: <a href="">http://localhost/solve/145</a></div>
                     </div>
                 </form>
             </article>

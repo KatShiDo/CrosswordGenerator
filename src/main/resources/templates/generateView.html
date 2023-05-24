@@ -4,9 +4,12 @@
     <title>Создать кроссворд</title>
     <link rel="stylesheet"  type="text/css" th:href="@{/css/generate.css}">
     <link rel="stylesheet"  type="text/css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 
 <body>
@@ -24,40 +27,47 @@
             </form>
         </article>
         <article class="crossword-holder">
-            <div class="crossword-grid"
-                 th:styleappend="'grid-template-rows repeat(' + ${height} + ', 5%); grid-template-columns repeat('+ ${width} + ', 5%);'">
-                <div th:if="${crossword} != null" th:each="cell : ${crossword}" th:text="${cell}" class="grid-cell">
+            <div class="crossword-grid" th:if="${crossword} != null"
+                 th:styleappend="'grid-template-rows: repeat(' + ${height} + ', 1.75em); grid-template-columns: repeat('+ ${width} + ', 1.75em); width: ' + (1.75 * ${width}) + 'em; height: ' + (1.75 * ${height}) + 'em;'">
+                <div  th:each="cell : ${crossword}" th:text="${cell.value}" class="grid-cell">
                     *
                 </div>
-                <div th:if="${crossword} == null" class="grid-cell" th:each="i : ${#numbers.sequence(0, 400)}">
+            </div>
+            <div class="crossword-grid" style="width:100%;height:100%;grid-template-rows: repeat(20, 5%);grid-template-columns: repeat(20, 5%);" th:if="${crossword} == null" >
+                <div  class="grid-cell" th:each="i : ${#numbers.sequence(0, 400)}">
 
                 </div>
             </div>
         </article>
         <article th:if="${crossword}" class="add-questions">
             <span id="add-question-text">Добавить вопросы?</span>
-            <input type="radio" class="add-words-rb" id="yes" name="add-or-not">
+            <input type="radio" class="add-words-rb" id="yes" name="add-or-not" th:checked="${link}">
             <label for="yes" class="add-questions-label">Да</label>
-            <input type="radio" class="add-words-rb" id="no" name="add-or-not" checked>
+            <input type="radio" class="add-words-rb" id="no" name="add-or-not" th:checked="!${link}">
             <label for="no" class="add-questions-label">Нет</label>
-            <form action="/crossword/save" method="post" id="create-questions">
-                <div class="question-entity" th:each="i : ${#numbers.sequence(0, wordsCount - 1)}"
-                     th:id="'question' + ${i}" th:attr="qnumber=${i}">
-                    <span class="question-number" th:text="${i} + 1">?</span>
-                    <textarea th:name="'question' + ${i}" class="question-field" cols="60" rows="4"
-                              placeholder="Введите вопрос"></textarea>
+            <form method="post" th:action="@{/save}" id="create-questions">
+                <div class="question-entity" th:each="word, iterStat : ${usedWords}"
+                     th:id="'question' + ${iterStat.index}" th:attr="qnumber=${iterStat.index}">
+                    <div class="entity-head">
+                        <span class="question-number" th:text="${iterStat.index} + 1">?</span>
+                        <span class="word-for-question" th:text="${word}">
+                                ...
+                        </span>
+                    </div>
+                    <textarea name="questions" class="question-field" cols="60" rows="4" placeholder="Введите вопрос"></textarea>
                 </div>
                 <div class="down-holder">
                     <label for="crossword-name-text" id="name-label">Название кроссворда</label>
-                    <input type="text" name="crossword-name" id="crossword-name-text">
-                    <button type="button" class="questions-button highlighted-button">Сохранить</button>
-                    <button type="button" class="questions-button highlighted-button">Поделиться</button>
+                    <input type="text" name="title" id="crossword-name-text">
+                    <button type="submit" id="save" class="questions-button highlighted-button">Сохранить</button>
+                    <div th:if="${link}" class="link-holder"> Ссылка на кроссворд: <a th:href="${link}" th:text="${link}">http://localhost/solve/145</a></div>
+                    <div th:if="${saveError}" class="save-error" th:text="${saveError}"></div>
                 </div>
             </form>
         </article>
     </article>
     <footer th:include="footer :: footer"></footer>
 </main>
-<script th:src="@{/javascript/indexscript.js}"></script>
+<script th:src="@{/javascript/generate.js}"></script>
 </body>
 </html>

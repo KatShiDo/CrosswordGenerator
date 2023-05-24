@@ -1,18 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" th:xmlns="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <body>
 <header th:fragment="header">
-  <a href="#" id="header-link">СОЗДАТЬ КРОССВОРД</a>
+  <a th:href="@{/}" id="header-link">СОЗДАТЬ КРОССВОРД</a>
   <form action="" method="post" id="crossword-find-form">
     <input type="text" name="search-crossword" id="search-crossword" placeholder="Найти кроссворд">
     <button type="submit" id="search-submit-button"><img th:src="@{/img/search.png}" alt="Поиск"></button>
   </form>
-  <div class="account-buttons-holder" th:if="${principal.getUsername() == null}">
-    <a href="/login" class="account-button" id="sign-in">Войти</a>
-    <a href="/registration" class="account-button" id="sign-up">Регистрация</a>
+  <div th:if="!${user}" class="account-buttons-holder">
+    <a th:href="@{/login}"><button type="button"  class="account-button" id="sign-in">Войти</button></a>
+    <a th:href="@{/regin}"><button class="account-button" id="sign-up">Регистрация</button></a>
   </div>
-  <div class="account-buttons-holder" th:if="${principal.getUsername() != null}">
-    <a href="/logout" class="account-button" id="sign-out">Выйти</a>
+  <div th:if="${user}" class="account-buttons-holder">
+    <a th:href="@{/account}">
+      <img th:if="${user.avatar}" th:src="@{'/images/' + ${user.avatar.id}}" class="avatar-image" alt="user-avatar">
+      <img th:if="!${user.avatar}" th:src="@{/img/avatar.png}" class="avatar-image" alt="user-avatar">
+    </a>
+    <form id="logout-form" th:action="@{/logout}" method="post"><button type="submit" class="account-button" id="sign-out">Выйти</button></form>
   </div>
 </header>
 </body>

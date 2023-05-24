@@ -58,3 +58,17 @@ header {
     text-decoration: none;
     justify-self: left;
 }
+
+.account-buttons-holder{
+    display:flex;
+}
+
+.avatar-image{
+    width:25px;
+    height:25px;
+    margin:0.5em;
+}
+
+#logout-form{
+    margin:0;
+}
