@@ -103,7 +103,7 @@ public class CrosswordsController {
     @PostMapping("/save")
     public String saveCrossword(QuestionsForm questionsForm, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.getByUsername(((User)authentication.getPrincipal()).getUsername());
+        User user = userService.getByUsername(authentication.getName());
         if(questionsForm.getQuestions().size() != result.getCrossword().size()){
             model.addAttribute("saveError", "Заполните все поля с вопросами");
         }
