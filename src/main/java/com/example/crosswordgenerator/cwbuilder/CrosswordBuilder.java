@@ -100,38 +100,11 @@ public class CrosswordBuilder {
                     maxY = wy + length;
             }
             int width = maxX - minX + 1, height = maxY - minY + 1, offsetX=1, offsetY=1;
-//            String[][] crossword;
-//            if(width < 20 || height < 20){
-//                int old_width = width, old_height = height;
-//                if(width < 20) {
-//                    width = 20;
-//                    offsetX += (20 - old_width) / 2;
-//                }
-//                if(height < 20) {
-//                    height = 20;
-//                    offsetY += (20 - old_height) / 2;
-//                }
-//            }
             List<WordReadyToSave> wordsReadyToSave = new ArrayList<>();
-//            crossword = new String[width][height];
-//            for(int i=0;i < width;i++)
-//                for(int j = 0;j < height;j++)
-//                    crossword[i][j] = " ";
             int wordindex = 1;
             for(PlacedWord pWord:placedWords){
-//                boolean isHorizontal = pWord.isHorizontal();
-//                int x = pWord.getPosX() - minX, y = pWord.getPosY() - minY;
                 wordsReadyToSave.add(new WordReadyToSave(words.get(pWord.getWi()), pWord.isHorizontal(),
                         pWord.getPosX() - minX, pWord.getPosY() - minY));
-//                String word = words.get(pWord.getWi());
-//                crossword[offsetX + x - (isHorizontal?1:0)][offsetY + y - (!isHorizontal?1:0)] = String.valueOf(wordindex++);
-//                for(int i=0;i<word.length();i++){
-//                    crossword[offsetX + x][offsetY + y] = String.valueOf(word.charAt(i));
-//                    if(isHorizontal)
-//                        x++;
-//                    else
-//                        y++;
-//                }
             }
             return new CrosswordResult(omittedWords,  wordsReadyToSave, width, height);
         }else{

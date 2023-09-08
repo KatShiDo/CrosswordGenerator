@@ -12,7 +12,7 @@ services:
     volumes:
       - my-db:/var/lib/postgresql/data
   app:
-    build: javaserver/
+    build: java_server/
     environment:
      SPRING_DATASOURCE_URL: 'jdbc:postgresql://db:5432/cwgendb'
      SPRING_DATASOURCE_USERNAME: 'postgres'
