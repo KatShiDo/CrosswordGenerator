@@ -94,6 +94,9 @@
                                     <exclude>log4j:log4j:jar:</exclude>
                                 </excludes>
                             </artifactSet>
+                            <outputDirectory>
+                                ${project.basedir}/java_server
+                            </outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
