@@ -31,6 +31,7 @@
         <version>3.4.1</version>
         <executions>
           <execution>
+            <id>shade-my-jar</id>
             <phase>package</phase>
             <goals>
               <goal>shade</goal>
@@ -47,6 +48,21 @@
                 </excludes>
               </artifactSet>
               <outputDirectory>${project.basedir}/java_server</outputDirectory>
+              <transformers>
+                <transformer>
+                  <resource>META-INF/spring.handlers</resource>
+                </transformer>
+                <transformer>
+                  <resource>META-INF/spring.factories</resource>
+                </transformer>
+                <transformer>
+                  <resource>META-INF/spring.schemas</resource>
+                </transformer>
+                <transformer />
+                <transformer>
+                  <mainClass>com.example.crosswordgenerator.CrosswordGeneratorApplication</mainClass>
+                </transformer>
+              </transformers>
             </configuration>
           </execution>
         </executions>
