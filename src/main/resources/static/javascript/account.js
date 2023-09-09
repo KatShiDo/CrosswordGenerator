@@ -25,6 +25,7 @@ for(let change_button of document.querySelectorAll(".user-change-button")){
         let target = event.target;
         if (target.classList.contains("change-mode")) {
             let change = target.id.slice(target.id.lastIndexOf("-") + 1);
+            document.getElementById(change).setAttribute("disabled", '');
             let value = document.getElementById(change).value;
             console.log(change + " : " + value);
             let id = target.getAttribute("user_id");
@@ -47,6 +48,8 @@ for(let change_button of document.querySelectorAll(".user-change-button")){
                 confirm(json["error"]);
             }
         }else{
+            let change = target.id.slice(target.id.lastIndexOf("-") + 1);
+            document.getElementById(change).removeAttribute("disabled");
             target.setAttribute("src", "http://localhost:8080/img/check-sign.png");
             target.classList.add("change-mode");
             let textarea = document.getElementById(target.id.slice(target.id.lastIndexOf("-") + 1));

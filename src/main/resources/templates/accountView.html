@@ -17,7 +17,7 @@
     <div class="user-holder">
         <div class="avatar-holder">
             <div class="username-holder">
-                <textarea class="changeable-field" id="username" th:cols="${user.username.length()}" rows="1" th:text="${user.username}"></textarea>
+                <textarea class="changeable-field" id="username" th:cols="${user.username.length()}" rows="1" th:text="${user.username}" disabled> </textarea>
                 <img th:src="@{/img/pencil.png}" class="user-change-button" alt="change" id="change-username" th:attr="user_id=${user.id}">
             </div>
             <img th:if="${user.avatar}" th:src="@{'/images/' + ${user.avatar.id}}" class="big-avatar-image" alt="avatar">

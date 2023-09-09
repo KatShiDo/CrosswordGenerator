@@ -79,6 +79,12 @@ public class CrosswordsController {
         for(String word:iw.getWords().toLowerCase().split("[^a-zA-Zа-яА-Я0-9]"))
             if(!word.isEmpty())
                 words.add(word);
+        if(words.isEmpty()){
+            model.addAttribute("wordsobj", new InputWords());
+            model.addAttribute("width", 20);
+            model.addAttribute("height", 20);
+            return "generateView";
+        }
         CrosswordResult cw = builder.buildCrosswordOutOfWords(words);
         if(cw.getStatus() == 0 || cw.getStatus() == 1){
             result.setCrossword(cw.getCrossword());
