@@ -4,16 +4,12 @@ import com.example.crosswordgenerator.models.Crossword;
 import com.example.crosswordgenerator.models.User;
 import com.example.crosswordgenerator.repositories.ICrosswordRepository;
 import com.example.crosswordgenerator.repositories.IUserRepository;
-
 import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.List;
 
 /**
  * Класс, представляющий операции для работы с кроссвордами.
@@ -44,9 +40,10 @@ public class CrosswordService {
      * Сохранить кроссворд.
      * @param crossword кроссворд
      * */
-    public void save(Crossword crossword) {
+    public Crossword save(Crossword crossword) {
         log.info("Saving new Crossword. Title: {}", crossword.getTitle());
-        crosswordRepository.save(crossword);
+        crossword = crosswordRepository.save(crossword);
+        return crossword;
     }
 
     /**
