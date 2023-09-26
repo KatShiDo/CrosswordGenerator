@@ -116,7 +116,7 @@ public class CrosswordBuilder {
         if(availableWords.size() == 0)
             return true;
         for(int charLinkPos = 0;charLinkPos < availableLinks.size(); charLinkPos++){
-            availableLinks.sort((a, b) ->Integer.compare(a.getPrevalence(), b.getPrevalence()));
+            availableLinks.sort(Comparator.comparingInt(CharLink::getPrevalence));
             CharLink selectedCharLink = availableLinks.get(charLinkPos);
             int linkX = selectedCharLink.getPosX(), linkY = selectedCharLink.getPosY();
             boolean isHorizontal = selectedCharLink.isInHorizontalWord();
