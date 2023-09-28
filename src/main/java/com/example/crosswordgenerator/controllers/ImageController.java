@@ -36,6 +36,7 @@ public class ImageController {
     @GetMapping("/images/{id}")
     public ResponseEntity<?> getImageById(@PathVariable Long id) {
         Image image = imageRepository.findById(id).orElse(null);
+        if(image == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok()
                 .header("fileName", image.getOriginalFileName())
                 .contentType(MediaType.valueOf(image.getContentType()))
@@ -52,6 +53,7 @@ public class ImageController {
             image.setContentType(mime);
         }catch(IOException e){
             log.error(e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
         imageRepository.save(image);
         Map<String, Long> response = new HashMap<>();

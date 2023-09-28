@@ -14,7 +14,6 @@ class Word{
         uniqueChars = 0;
     }
 
-
     public Word(CharLink firstLink, int wi, int length){
         this();
         chars.add(firstLink);

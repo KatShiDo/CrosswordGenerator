@@ -1,6 +1,7 @@
 package com.example.crosswordgenerator.configurations;
 
 import com.example.crosswordgenerator.models.User;
+import com.example.crosswordgenerator.services.ImageService;
 import com.example.crosswordgenerator.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;

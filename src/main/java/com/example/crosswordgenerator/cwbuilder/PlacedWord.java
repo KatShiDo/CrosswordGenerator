@@ -3,7 +3,7 @@ package com.example.crosswordgenerator.cwbuilder;
 /**
  * Класс, описывающий слово, помещённое в кроссоврд
  * */
-class PlacedWord{
+public class PlacedWord{
     private int length, posX, posY, wi;
     private boolean isHorizontal;
 
