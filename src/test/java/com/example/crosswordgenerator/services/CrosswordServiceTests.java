@@ -12,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,6 +32,13 @@ public class CrosswordServiceTests {
     }
 
     @Test
+    public void CrosswordService_SaveCrossword_NullArgument_ThrowsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            crosswordService.save(null);
+        }, "NullPointerException was expected");
+    }
+
+    @Test
     public void CrosswordService_GetAllCrosswords_ReturnsIterable() {
         Iterable<Crossword> crosswords = Mockito.mock(Iterable.class);
         when(crosswordRepository.findAll()).thenReturn(crosswords);
@@ -49,7 +55,13 @@ public class CrosswordServiceTests {
     }
 
     @Test
-    public void CrosswordService_IncreaseSolvedCount_ReturnBoolean() {
+    public void CrosswordService_GetById_NullId_ReturnsNull() {
+        Crossword crossword = crosswordService.getById(null);
+        Assertions.assertNull(crossword);
+    }
+
+    @Test
+    public void CrosswordService_IncreaseSolvedCount_ReturnsTrue() {
         Crossword crossword = new Crossword();
         when(crosswordRepository.findById(1L)).thenReturn(Optional.of(crossword));
         when(crosswordRepository.save(Mockito.any(Crossword.class))).thenReturn(crossword);
@@ -59,9 +71,16 @@ public class CrosswordServiceTests {
     }
 
     @Test
-    public void CrosswordService_DeleteCrossword() {
+    public void CrosswordService_DeleteCrossword_ReturnsTrue() {
         Crossword crossword = new Crossword();
         when(crosswordRepository.findById(1L)).thenReturn(Optional.of(crossword));
-        assertAll(() -> crosswordService.delete(1L));
+        boolean result = crosswordService.delete(1L);
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    public void CrosswordService_DeleteCrossword_NullId_ReturnsFalse() {
+        boolean result = crosswordService.delete(null);
+        Assertions.assertFalse(result);
     }
 }
