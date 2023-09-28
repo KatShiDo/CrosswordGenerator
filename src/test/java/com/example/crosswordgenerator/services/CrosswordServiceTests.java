@@ -66,8 +66,14 @@ public class CrosswordServiceTests {
         when(crosswordRepository.findById(1L)).thenReturn(Optional.of(crossword));
         when(crosswordRepository.save(Mockito.any(Crossword.class))).thenReturn(crossword);
 
-        Boolean result = crosswordService.increaseSolvedCount(1L);
-        Assertions.assertEquals(true, result);
+        boolean result = crosswordService.increaseSolvedCount(1L);
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    public void CrosswordService_IncreaseSolvedCount_NullId_ReturnsFalse() {
+        boolean result = crosswordService.increaseSolvedCount(1L);
+        Assertions.assertFalse(result);
     }
 
     @Test

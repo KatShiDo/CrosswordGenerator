@@ -53,7 +53,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void UserService_GetAllUsers_ReturnsIterable() {
+    public void UserService_GetAllUsers_ReturnsList() {
         List<User> users = Mockito.mock(List.class);
         when(userRepository.findAll()).thenReturn(users);
         Iterable<User> usersReturn = userService.getAll();

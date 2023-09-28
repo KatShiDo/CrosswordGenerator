@@ -76,7 +76,7 @@ public class CrosswordService {
      * @param id id кроссворда.
      * @return Объект класса Сrossword.
      * */
-    public Crossword getById(Long id) {
+    public Crossword getById(Long id){
         return crosswordRepository.findById(id).orElse(null);
     }
 
